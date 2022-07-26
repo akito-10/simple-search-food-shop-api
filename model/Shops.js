@@ -1,9 +1,20 @@
-const fetch = require("node-fetch");
+const { default: axios } = require("axios");
 
 module.exports = {
-  findAll: async ({ range, card, midnight, lat, lng }) => {
-    return await fetch(
-      `http://webservice.recruit.co.jp/hotpepper/gourmet/v1?key=${process.env.HOTPEPPER_API_KEY}&format=json&count=10&range=${range}&card=${card}&midnight=${midnight}&lat=${lat}&lng=${lng}`
+  findAll: async ({ range, card = 0, midnight = 0, lat, lng }) => {
+    return await axios.get(
+      "http://webservice.recruit.co.jp/hotpepper/gourmet/v1",
+      {
+        headers: { "Content-type": "application/json" },
+        params: {
+          key: process.env.HOTPEPPER_API_KEY,
+          range: range,
+          card: card,
+          midnight: midnight,
+          lat: lat,
+          lng: lng,
+        },
+      }
     );
   },
 };
